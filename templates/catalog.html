@@ -1,0 +1,75 @@
+{% extends "base.html" %}
+
+{% block title %}Book Catalog - Library System{% endblock %}
+
+{% block content %}
+<div class="catalog-header">
+    <div>
+        <h1>Book Catalog</h1>
+    </div>
+    <div style="display: flex; gap: 10px;">
+        <a href="{{ url_for('library.wishlist') }}" class="btn" style="background: #28a745;">Wishlist</a>
+        <a href="{{ url_for('library.maturita') }}" class="btn" style="background: #5a5a5a;">Maturita</a>
+        <a href="{{ url_for('library.request_book') }}" class="btn">Request a Book</a>
+    </div>
+</div>
+
+{% if books %}
+    <div class="books-grid">
+        {% for book in books %}
+            <div class="book-card">
+                <div class="book-card-content">
+                    <h3>{{ book.title }}</h3>
+                    <div class="book-info">
+                        <strong>Author:</strong> {{ book.author }}
+                    </div>
+                    <div class="book-info">
+                        <strong>Genre:</strong> {{ book.genre }}
+                    </div>
+                    <div class="book-info">
+                        <strong>Period:</strong> {{ book.period }}
+                    </div>
+                    
+                    <div class="book-status">
+                        {% if book.available %}
+                            <span class="badge badge-available">Available</span>
+                        {% else %}
+                            <span class="badge badge-borrowed">Borrowed by {{ book.borrowed_by }}</span>
+                        {% endif %}
+                    </div>
+
+                    <div class="book-actions">
+                        <form method="post" action="{{ url_for('library.add_to_wishlist', book_id=book.id) }}" style="flex: 1;">
+                            <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 8px; font-size: 12px;">Wishlist</button>
+                        </form>
+                        <form method="post" action="{{ url_for('library.add_to_maturita', book_id=book.id) }}" style="flex: 1;">
+                            <button type="submit" class="btn" style="width: 100%; padding: 8px; font-size: 12px; background: #5a5a5a; color: white;">Maturita</button>
+                        </form>
+                    </div>
+
+                    {% if book.available %}
+                        <div class="book-actions">
+                            <form method="post" action="{{ url_for('library.borrow_electronic', book_id=book.id) }}" style="flex: 1;">
+                                <button type="submit" class="btn btn-success" style="width: 100%; padding: 10px; font-size: 12px;">E-Copy</button>
+                            </form>
+                            <form method="post" action="{{ url_for('library.borrow_physical', book_id=book.id) }}" style="flex: 1;">
+                                <button type="submit" class="btn" style="width: 100%; padding: 10px; font-size: 12px; background: #0056b3;">Physical</button>
+                            </form>
+                        </div>
+                    {% elif user and book.borrowed_by == user.username %}
+                        <div class="book-actions">
+                            <form method="post" action="{{ url_for('library.return_book', book_id=book.id) }}" style="flex: 1;">
+                                <button type="submit" class="btn btn-secondary" style="width: 100%; padding: 10px;">Return</button>
+                            </form>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        {% endfor %}
+    </div>
+{% else %}
+    <div style="background: white; padding: 40px; text-align: center; border-radius: 10px; margin-top: 30px;">
+        <p style="font-size: 18px; color: #666;">No books in the library yet.</p>
+    </div>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,240 @@
+{% extends "base.html" %}
+
+{% block title %}Home - Library System{% endblock %}
+
+{% block content %}
+<style>
+    .hero-section {
+        background: linear-gradient(135deg, #5a5a5a 0%, #424242 100%);
+        color: white;
+        padding: 80px 40px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .hero-section h1 {
+        font-size: 48px;
+        margin: 0 0 20px 0;
+        font-weight: bold;
+    }
+    
+    .hero-section p {
+        font-size: 18px;
+        margin: 0 0 30px 0;
+        opacity: 0.95;
+        max-width: 600px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    
+    .hero-buttons {
+        display: flex;
+        gap: 15px;
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    
+    .hero-buttons .btn {
+        font-size: 16px;
+        padding: 12px 30px;
+        font-weight: bold;
+    }
+    
+    .features-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 30px;
+        margin-bottom: 50px;
+    }
+    
+    .feature-card {
+        background: #2d2d2d;
+        border: 1px solid #3d3d3d;
+        padding: 30px;
+        border-radius: 8px;
+        text-align: center;
+        transition: all 0.3s ease;
+    }
+    
+    .feature-card:hover {
+        border-color: #5a5a5a;
+        box-shadow: 0 4px 12px rgba(90, 90, 90, 0.2);
+        transform: translateY(-5px);
+    }
+    
+    .feature-icon {
+        font-size: 40px;
+        margin-bottom: 15px;
+    }
+    
+    .feature-card h3 {
+        color: #8a8a8a;
+        font-size: 20px;
+        margin: 0 0 15px 0;
+    }
+    
+    .feature-card p {
+        color: #9e9e9e;
+        margin: 0;
+        line-height: 1.6;
+    }
+    
+    .stats-section {
+        background: #2d2d2d;
+        border: 1px solid #3d3d3d;
+        padding: 40px;
+        border-radius: 10px;
+        text-align: center;
+        margin-bottom: 50px;
+    }
+    
+    .stats-section h2 {
+        color: #8a8a8a;
+        margin: 0 0 40px 0;
+        font-size: 28px;
+    }
+    
+    .stats-display {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 30px;
+    }
+    
+    .stat-box {
+        background: #1a1a1a;
+        border: 1px solid #3d3d3d;
+        padding: 25px;
+        border-radius: 8px;
+    }
+    
+    .stat-box .stat-number {
+        font-size: 36px;
+        font-weight: bold;
+        color: #8a8a8a;
+        margin-bottom: 10px;
+    }
+    
+    .stat-box .stat-label {
+        color: #9e9e9e;
+        font-size: 14px;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+    }
+    
+    .cta-section {
+        background: linear-gradient(135deg, #5a5a5a 0%, #424242 100%);
+        color: white;
+        padding: 50px 40px;
+        border-radius: 10px;
+        text-align: center;
+    }
+    
+    .cta-section h2 {
+        font-size: 32px;
+        margin: 0 0 20px 0;
+    }
+    
+    .cta-section p {
+        font-size: 16px;
+        margin: 0 0 30px 0;
+        opacity: 0.95;
+    }
+    
+    .cta-section .btn {
+        font-size: 16px;
+        padding: 12px 35px;
+        font-weight: bold;
+    }
+</style>
+
+<!-- Hero Section -->
+<div class="hero-section">
+    <h1>Welcome to Our Library</h1>
+    <p>Discover thousands of books, manage your reading list, and prepare for your Maturita exams with curated reading lists.</p>
+    <div class="hero-buttons">
+        {% if session.user_id %}
+            <a href="{{ url_for('library.catalog') }}" class="btn" style="background: white; color: #5a5a5a;">Browse Catalog</a>
+            <a href="{{ url_for('library.maturita') }}" class="btn">Maturita Lists</a>
+        {% else %}
+            <a href="{{ url_for('auth.login') }}" class="btn" style="background: white; color: #5a5a5a;">Login</a>
+            <a href="{{ url_for('auth.signup') }}" class="btn">Sign Up</a>
+        {% endif %}
+    </div>
+</div>
+
+<!-- Features Section -->
+<div class="features-grid">
+    <div class="feature-card">
+        <div class="feature-icon">●</div>
+        <h3>Vast Collection</h3>
+        <p>Access a comprehensive collection of books across multiple categories and genres.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">●</div>
+        <h3>Reading Lists</h3>
+        <p>Create and manage personalized reading lists and wishlists.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">●</div>
+        <h3>Track Progress</h3>
+        <p>Monitor your reading progress and get insights on your reading habits.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">●</div>
+        <h3>Maturita Prep</h3>
+        <p>Complete curated reading lists designed for Maturita exam preparation.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">●</div>
+        <h3>E-Books</h3>
+        <p>Download and access digital copies of books whenever you need them.</p>
+    </div>
+    
+    <div class="feature-card">
+        <div class="feature-icon">●</div>
+        <h3>Smart Requests</h3>
+        <p>Request new books and get notified when they're added to the library.</p>
+    </div>
+</div>
+
+<!-- Statistics Section -->
+{% if stats %}
+<div class="stats-section">
+    <h2>Library Statistics</h2>
+    <div class="stats-display">
+        <div class="stat-box">
+            <div class="stat-number">{{ stats.total_books }}</div>
+            <div class="stat-label">Books Available</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">{{ stats.total_users }}</div>
+            <div class="stat-label">Active Readers</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">{{ stats.borrowed_books }}</div>
+            <div class="stat-label">Books Borrowed</div>
+        </div>
+        <div class="stat-box">
+            <div class="stat-number">{{ stats.e_book_downloads }}</div>
+            <div class="stat-label">E-Books Downloaded</div>
+        </div>
+    </div>
+</div>
+{% endif %}
+
+<!-- CTA Section -->
+<div class="cta-section">
+    <h2>Get Started Today</h2>
+    <p>Join our community of readers and explore unlimited possibilities.</p>
+    {% if not session.user_id %}
+        <a href="{{ url_for('auth.signup') }}" class="btn" style="background: white; color: #5a5a5a; font-weight: bold;">Create Your Account</a>
+    {% else %}
+        <a href="{{ url_for('library.catalog') }}" class="btn" style="background: white; color: #5a5a5a; font-weight: bold;">Explore Now</a>
+    {% endif %}
+</div>
+{% endblock %}

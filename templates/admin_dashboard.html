@@ -1,0 +1,130 @@
+{% extends "base.html" %}
+
+{% block title %}Admin Dashboard - Library System{% endblock %}
+
+{% block content %}
+<div style="margin-bottom: 30px;">
+    <h1>Admin Dashboard</h1>
+    <a href="{{ url_for('admin.add_book') }}" class="btn" style="margin-top: 15px;">+ Add New Book</a>
+</div>
+
+<!-- Statistics Section -->
+<div class="stats-grid">
+    <div class="stat-card">
+        <div class="stat-label">Total Users</div>
+        <div class="stat-value">{{ stats.total_users }}</div>
+        <div class="stat-description">Registered accounts</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-label">Active Users</div>
+        <div class="stat-value">{{ stats.active_users }}</div>
+        <div class="stat-description">Non-admin users</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-label">Monthly Visitors</div>
+        <div class="stat-value">{{ stats.current_month_visitors }}</div>
+        <div class="stat-description">Unique visitors this month</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-label">Books in Library</div>
+        <div class="stat-value">{{ stats.total_books }}</div>
+        <div class="stat-description">Total catalog</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-label">Books Borrowed</div>
+        <div class="stat-value">{{ stats.borrowed_books }}</div>
+        <div class="stat-description">Currently unavailable</div>
+    </div>
+    
+    <div class="stat-card">
+        <div class="stat-label">E-Book Downloads</div>
+        <div class="stat-value">{{ stats.e_book_downloads }}</div>
+        <div class="stat-description">Total digital copies</div>
+    </div>
+</div>
+
+<div style="background: #2d2d2d; padding: 30px; border-radius: 10px; margin-bottom: 30px; border: 1px solid #3d3d3d;">
+    <h2 style="color: #8a8a8a; margin-bottom: 20px;">Books in Library ({{ books|length }})</h2>
+    {% if books %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Genre</th>
+                    <th>Period</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books %}
+                    <tr>
+                        <td>{{ book.title }}</td>
+                        <td>{{ book.author }}</td>
+                        <td>{{ book.genre }}</td>
+                        <td>{{ book.period }}</td>
+                        <td>
+                            {% if book.available %}
+                                <span class="badge badge-available">Available</span>
+                            {% else %}
+                                <span class="badge badge-borrowed">Borrowed</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <a href="{{ url_for('admin.edit_book', book_id=book.id) }}" class="btn btn-secondary" style="padding: 8px 12px; font-size: 12px;">Edit</a>
+                            <form method="post" action="{{ url_for('admin.delete_book', book_id=book.id) }}" style="display: inline;" onsubmit="return confirm('Are you sure?');">
+                                <button type="submit" class="btn btn-danger" style="padding: 8px 12px; font-size: 12px;">Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: #9e9e9e;">No books in the library yet.</p>
+    {% endif %}
+</div>
+
+<div style="background: #2d2d2d; padding: 30px; border-radius: 10px; border: 1px solid #3d3d3d;">
+    <h2 style="color: #8a8a8a; margin-bottom: 20px;">Pending Book Requests ({{ pending_requests|length }})</h2>
+    {% if pending_requests %}
+        <table>
+            <thead>
+                <tr>
+                    <th>Requested By</th>
+                    <th>Title</th>
+                    <th>Author</th>
+                    <th>Reason</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for req in pending_requests %}
+                    <tr>
+                        <td>{{ req.username }}</td>
+                        <td>{{ req.title }}</td>
+                        <td>{{ req.author }}</td>
+                        <td>{{ req.reason if req.reason else 'N/A' }}</td>
+                        <td>
+                            <form method="post" action="{{ url_for('admin.approve_request', request_id=req.id) }}" style="display: inline;">
+                                <button type="submit" class="btn btn-success" style="padding: 8px 12px; font-size: 12px;">Approve</button>
+                            </form>
+                            <form method="post" action="{{ url_for('admin.reject_request', request_id=req.id) }}" style="display: inline;">
+                                <button type="submit" class="btn btn-danger" style="padding: 8px 12px; font-size: 12px;">Reject</button>
+                            </form>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% else %}
+        <p style="color: #9e9e9e;">No pending requests.</p>
+    {% endif %}
+</div>
+{% endblock %}
+

@@ -1,0 +1,29 @@
+{
+  "total_visitors": 0,
+  "monthly_visits": {
+    "2026-01": [
+      {
+        "username": "Nypl",
+        "timestamp": "2026-01-28T14:45:06.587449"
+      },
+      {
+        "username": "asdf",
+        "timestamp": "2026-01-28T14:45:58.848741"
+      },
+      {
+        "username": "me",
+        "timestamp": "2026-01-28T14:51:26.105112"
+      },
+      {
+        "username": "me",
+        "timestamp": "2026-01-28T14:51:53.787265"
+      },
+      {
+        "username": "admin",
+        "timestamp": "2026-01-28T14:53:51.474616"
+      }
+    ]
+  },
+  "e_book_downloads": 0,
+  "last_updated": "2026-01-28T14:53:51.474616"
+}

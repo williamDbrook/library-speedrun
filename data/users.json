@@ -1,0 +1,30 @@
+[
+  {
+    "id": 1,
+    "username": "admin",
+    "password": "pbkdf2:sha256:600000$o0rK5ssXtIMrOojY$ff44de63a303020976b02ee92a47d669284420a4740be767db1388bdcb36df81",
+    "email": "admin@library.com",
+    "is_admin": true,
+    "tags": [
+      "Teacher",
+      "Librarian"
+    ],
+    "wishlist": [],
+    "maturita_list": [],
+    "created_at": "2026-01-28T14:50:15.248948"
+  },
+  {
+    "id": 2,
+    "username": "me",
+    "password": "pbkdf2:sha256:600000$E58vaT7pH1zsE11G$af1db657b5f23a451c07999bec9a29782bf0abc342cb8769e94820c8b86fab9c",
+    "email": "me@me.me",
+    "is_admin": true,
+    "tags": [
+      "Teacher",
+      "Librarian"
+    ],
+    "wishlist": [],
+    "maturita_list": [],
+    "created_at": "2026-01-28T14:51:22.830073"
+  }
+]

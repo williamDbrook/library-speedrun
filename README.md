@@ -7,7 +7,7 @@
 ## Kolik to stálo?
 - ~122,000 - 142,000 Tokenů
 
-## Jake jsem spokojený
+## Jak jsem spokojený
 - Velmi stránka je hezká a funkční 
 
 
